@@ -1,87 +1,127 @@
 # Opdrachtbeschrijving
 
 ## Inleiding
+Het fruitmand-bezorgd-bedrijf van Freek en Bernard heeft de pandemie helaas niet overleefd. Daarom hebben ze nu een nieuw idee: ze willen een blogplatform opzetten en rijk worden met affiliate marketing. Tenminste, dat is het plan. Het enige wat ze nodig hebben, is zo'n platform... Of je ze misschien nog één keer wil helpen?
 
-Vorige week heb je het blogplatform Blogventure voor je vrienden Freek en Bernard opgezet. Omdat ze weten dat je geen
-tijd hebt om óók nog de backend te bouwen, hebben ze dit door iemand anders laten doen. Jij kunt alle blogposts straks
-opvragen door requests te maken naar deze backend (webAPI).
+Voor jou natuurlijk geen probleem. Inmiddels heb je geleerd hoe je met routing, state, formulieren, componenten en helper-functies moet werken. Al deze concepten kun je in deze opdracht mooi toepassen, want je wilde nog wat extra oefenen met het opzetten van routingsstructuren en werken met dynamic parameters. Gelukkig hebben Freek en Bernard dit keer wél een designer ingehuurd en een normaal bedrijfslogo laten maken. Alle varianten van dit logo vind je in de `assets`-map!
 
 ![logo.png](src/assets/logo-black.png)
 
 ## Applicatie starten
+Als je het project gecloned hebt naar jouw locale machine, installeer je eerst de `node_modules` door het volgende commando in de terminal te runnen:
 
-Deze opdracht is een vervolg op [part 1](https://github.com/hogeschoolnovi/frontend-react-blog-part1), dus je kunt verder werken in jouw eigen project. Wel zul je de blogventure
-backend moeten clonen om er gebruik van te kunnen maken. Dit betekent dat je twee projecten tegelijkertijd aan het
-runnen bent:
-jouw Blogventure frontend en jouw Blogventure backend. Clone [deze backend](https://github.com/hogeschoolnovi/frontend-fake-blog-database) naar jouw eigen computer en start deze op
-volgens de instructies in de `README.md`. Lees de documentatie goed door, zodat je weet welke endpoints
-er beschikbaar zijn. Op basis van de volgende opdrachten zul je namelijk zelf moeten bedenken waar het request naartoe
-moet.
+```shell
+npm install
+```
 
-_Tip:_ begin een nieuw, schoon frontend projectje zodat je onbezorgd kunt oefenen met de requests, voordat je dit
-implementeert in je bestaande blogventure applicatie. Scheelt een hoop verwarring en zoekwerk.
+Wanneer dit klaar is, kun je de applicatie starten met behulp van:
 
-## Opdracht 1 - Oefenrequests (in de console)
+```shell
+npm run dev
+```
 
-1. **Blogposts ophalen:** maak een tijdelijke button, zodat je daar jouw asynchrone functie aan kunt koppelen. Maak een
-   request naar de backend om alle posts op te halen en log deze in de console;
-2. **Post 6 ophalen:** maak nog een button en gebruik deze om de informatie over de post met `id` 6 op te halen uit de
-   backend. Log deze gegevens in de console;
-3. **Nieuwe post toevoegen:** maak nog een button en zorg ervoor dat er een nieuwe todo wordt toegevoegd aan de database
-   wanneer de gebruiker hierop klikt. Dit mag je voor nu doen met hardcoded-tekst. Zorg ervoor dat er succesmelding in
-   de console wordt gelogd bij succes en een foutmelding bij een mislukte poging.
-4. Check, check, dubbelcheck: als je nu opnieuw alle posts ophaalt door op de haal taken op-knop te klikken, staat jouw
-   toegevoegde to-do daar nu bij? 😍
-5. **Post verwijderen:** maak een button en gebruik de `id` van de laatste to-do uit de lijst om deze uit de backend te
-   verwijderen. Deze `id` mag je voor nu gewoon even handmatig overtypen (hardcoded). Zorg ervoor dat er bij success een
-   melding in de console wordt gelogd en een foutmelding bij een mislukte poging (wanneer de post al verwijderd is,
-   bijvoorbeeld);
-6. **Post wijzigen:** maak nog een button en gebruik de `id` van de laatste to-do uit de lijst om daarvan de subtitel
-   te wijzgen. Let erop dat je **alle** informatie van deze post meestuurt - ook de velden die niet
-   worden aangepast! - anders verlies je gegevens. Ook hier wil je een succes- en foutmelding bij maken. Controleer of
-   de wijziging gelukt is door daarna weer op de knop te klikken die alle posts ophaalt.
+of gebruik de WebStorm knop (npm run dev). Open http://localhost:5173 om de pagina in de browser te bekijken. Begin met het maken van wijzigingen in `src/App.jsx`: elke keer als je een bestand opslaat, zullen de wijzigingen te zien zijn op de webpagina.
 
-## Opdracht 2 - Alle posts ophalen en weergeven
+## Opdracht 1 - Routing
 
-Wanneer de gebruiker op de overzichtspagina komt, willen we natuurlijk direct beginnen met het ophalen en weergeven van
-alle posts. Je hebt echter nog niet geleerd hoe je dit soort acties automatisch kunt triggeren*. We zullen alle requests
-daarom nog even handmatig moeten aanzwengelen met behulp van buttons.
+### Pagina's
+De blog-applicatie heeft op dit moment nog geen routing-structuur en ook geen pagina's. Tijd om daar verandering in te brengen! Maak vier pagina-componenten aan met een passende routing-structuur:
+* Home pagina
+* Nieuwe post pagina (om een nieuwe blog te starten)
+* Overzichtspagina (om alle blogs te bekijken)
+* Blogpost detail pagina (om informatie over één blog weer te geven)
 
-1. **Ophalen en opslaan:** zorg ervoor dat alle posts worden opgehaald wanneer de gebruiker op een 'Haal posts op'-knop
-   klikt. Hiervoor maak je een stukje state aan, zodat je de opgehaalde posts daarin kunt zetten.
-2. **Verwerken en afkaderen:** zorg ervoor dat de data die gebruikt wordt om de posts op de pagina weer te geven niet
-   meer uit het JSON-bestand komt, maar uit de state. Om er nu voor te zorgen dat de app niet crasht als er nog geen
-   data is, of als er geen data opgehaald kan worden, implementeer je een extra veiligheidscheck op de plek waar je over
-   de posts heen mapt.
-3. **Errors communiceren:** zorg ervoor dat er een passende foutmelding weergegeven wordt op de pagina wanneer het
-   ophalen van de data mislukt. Zo weet de gebruiker altijd waar 'ie aan toe is.
+### Navigatie
+Naast het feit dat er content op de pagina's moet komen te staan - hier komen we in opdracht 2 op terug - zul je ook moeten zorgen voor een goed werkende menu-balk met daarin de links naar 'Home', 'Nieuwe post' en 'Alle posts'.
 
-## Opdracht 3 - Specifieke post ophalen en weergeven
+### Dynamic routing
+De blogpost detailpagina is alleen te bereiken via een directe link, dus die staat niet in het menu. We willen er echter wel zeker van zijn dat je de dynamic route op de juiste manier hebt geïmplementeerd. Dit kun je testen door de parameter uit de url weer te geven in het bijbehorende pagina-component. Test of dit werkt door het volgende te doen:
+* Als je naar `/blogposts/fslkjfksdjf` navigeert, staat er dan _fslkjfksdjf_ op je pagina?
+* Als je naar `/blogposts/234` gaat, staat er dan _234_ op de pagina?
 
-We gaan hetzelfde doen op de pagina waar je de details over één post laat zien. Hiervoor halen we natuurlijk niet weer
-alle posts op, maar alleen de informatie over de post die we willen weergeven. Doorloop hier weer dezelfde stappen:
+## Opdracht 2 - Gebruik van data
+Tijd om de pagina's te vullen met content. Gezien dit een blogplatform is, gaan we de content natuurlijk niet _hardcoded_ op de pagina zetten. Binnenkort leer je hoe je die content kunt ophalen van een externe bron, maar voor nu maken we nog even gebruik van een JSON-bestand vol _ready-made_ blogposts. Deze vind je in de map `constants`. Tip: lukt het niet met importeren? Spiek dan even onderaan de pagina.
 
-1. Maak een knop
-2. Haal de juiste post op (op basis van de id) en sla deze op in de state;
-3. Gebruik de state data om de gegevens weer te geven en bouw een passende veiligheidscheck in;
-4. Handel foutmeldingen netjes af naar de gebruiker.
+### Overzichtspagina
+Deze pagina moet de totale hoeveelheid posts op het platform weergeven (een nummeriek getal) en een lijst van alle blogs. Deze geef je weer in het volgende format:
 
-## Opdracht 3 - Formulier werkend maken
+```
+De Smaken van Italië (Anna de Kok)
+12 reacties - 8 keer gedeeld
+```
 
-We hebben ons formulier natuurlijk al zo opgebouwd dat alle juiste informatie in een object verzameld wordt wanener de
-gebruiker het formulier submit. Er wordt echter niets verzonden... Ook daar gaan we verandering in brengen.
-1. Breidt de huidige `handleSubmit` functie uit, door er een asynchrone functie van te maken en voeg een `try/catch`-blok toe.
-2. Verstuur de verzamelde informatie op de voorgeschreven manier (in de documentatie) naar de backend;
-3. Bij succes verdwijnt het formulier en geef je het volgende weer op de pagina:
+De titels zijn links die de gebruiker doorlinkt naar de detailpagina van deze post.
 
-> De blogpost is succesvol toegevoegd. Je kunt deze hier`<link-naar-post>` bekijken.
+### Blogpost detail pagina
+Om de juiste informatie te laten zien, zul je eerst de corresponderende blogpost uit `data.json` moeten halen. _Tip:_ krijg je telkens `undefined` terug? Spiek dan eens bij de hints.
 
-4. Ging er iets mis? Dan blijft het formulier staan en geef je een rode foutmelding weer.
+Wanneer je de juiste gegevens bij de hand hebt, wil je die op de volgende manier op de pagina weergeven:
 
-## Bonusopdracht
+>
+> ### De Smaken van Italië (5 minuten)
+> #### Een culinaire reis door Bella Italia
+> Geschreven door Anna de kok op 21 september 2023
+> 
+> Italië, het land van heerlijke pasta, pizza en gelato, is een culinair paradijs dat elke fijnproever moet ervaren. In deze blog nemen we je mee op een smakelijke reis door Bella Italia. Ontdek de geheimen achter de perfecte risotto, leer hoe je zelfgemaakte pasta maakt en proef de verrukkelijke regionale gerechten van Noord tot Zuid. Bereid je voor om je smaakpapillen te verwennen in de keuken van de laarsvormige natie.
+> 
+> 12 reacties - 8 keer gedeeld
+> 
+> Terug naar de overzichtspagina
 
-* Zorg ervoor dat de gebruiker posts kan verwijderen doormiddel van een 'delete'-knop op de detailpagina.
+Onderaan de pagina staat een link die de gebruiker terugstuurt naar de overzichtspagina.
 
-*Hiervoor heb je effect-hooks nodig. Hoe deze hooks in React precies werken, zullen we later behandelen. Je mag voor nu
-simpelweg aannemen dat dit nodig is om niet in een never-ending-loop terecht te komen. Als je toch erg nieuwschierig
-bent naar effect-hooks en life cycles, geen zorgen, dit komt volgende week aan bod!
+Om de datum van _"2023-09-20T11:45:00Z"_ naar _"21 september 2023"_ te converteren maak je natuurlijk een mooie helperfunctie. Weet je niet meer hoe je datums moet formatteren? Duik dan weer eens in de cursus JavaScript Basics bij het hoofdstuk over methodes en lees je in over het _Date-object_.
+
+## Opdracht 3 - Formulier & Doorlinken
+We willen de gebruiker op ten duur in staat zellen om _zelf_ nieuwe blogposts toe te kunnen voegen aan ons platform. Hoewel we nog geen database of externe bron hebben waarin we die kunnen opslaan, kunnen we er wel alvast voor zorgen dat we die informatie kunnen _verzamelen_. Je mag het formulier bouwen op de standaard manier (controlled components met state) of met React Hook Form.
+
+### Formulier bouwen
+Bouw een formulier met de volgende velden:
+* Titel
+* Subtitel
+* Auteur
+* Bericht
+Alle velden moeten verplicht worden ingevuld. De blogpost moet minimaal 300 en maximaal 2000 karakters lang zijn. Als er niet aan deze voorwaarden is voldaan, kan de post niet worden verzonden.
+
+### Data verzamelen
+Wanneer de gebruiker op 'verzenden' drukt, worden deze gegevens in de console gelogd. Deze informatie verreik je vervolgens **zelf** met:
+* De hoeveelheid `shares` en `comments` (allebei `0`)
+* Een `created` property met daarin een [ISO-timestamp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) van het moment dat de gebruiker op de knop heeft drukt
+* De `readTime` in minuten. De leestijd bereken je zelf op basis van het aantal ingevulde woorden: een gemiddelde gebruiker leest 100 woorden in 0.3 minuten. Zorg dat je decimalen altijd afrond naar hele getallen. Zei iemand daar... helperfunctie?
+
+Een ingevuld formulier resulteerd in het volgende voorbeeld-resultaat:
+
+```json
+  {
+    "title": "Wat gebruiker heeft ingevuld",
+    "subtitle": "Wat gebruiker heeft ingevuld",
+    "content": "Wat gebruiker heeft ingevuld, in dit geval minder dan 100 woorden",
+    "author": "Voornaam achternaam",
+    "created": "2023-09-21T09:30:00Z",
+    "readTime": 1,
+    "comments": 0,
+    "shares": 0
+  }
+```
+
+### Doorlinken
+
+Wanneer de gebruiker alle juiste gegevens heeft ingevuld en we deze informatie in de console hebben gelogd, willen we de gebruiker automatisch doorsturen naar de overzichtspagina. Dat is natuurlijk niet zo gebruiksvriendelijk zonder eerst een succesmelding te tonen, maar daar maken we ons later druk om!
+
+## Hints & Extra houvast
+Je kunt het JSON-bestand op de volgende manier importeren en gebruiken:
+
+```jsx
+import posts from '../constants/data.json';
+
+function BlogPost() {
+  console.log(posts);
+  
+  return (
+    <></>
+  );
+}
+```
+
+Hierbij is het wel belangrijk om op te merken dat de `id`'s van alle blogposts zijn opgeslagen als nummerieke getallen, in tegenstelling tot de dynamic parameter uit de url. Dynamic parameters zijn altijd van type _string_. Wanneer je beide waardes wil vergelijken, zul je één van de twee eerst moeten omzetten naar een _string_ of _number_.
+
